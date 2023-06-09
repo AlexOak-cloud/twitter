@@ -25,9 +25,8 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public ModelAndView addUser(User user) {
-
         userService.save(user);
-
+        userService.createTableFriends(user);
         return new ModelAndView("redirect:/registration");
     }
 }
