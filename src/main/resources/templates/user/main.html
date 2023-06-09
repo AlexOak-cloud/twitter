@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2 th:text="${authUser.getAccountName}">Account name</h2>
+<p th:text="${authUser.getPhone}">Phone</p>
+<p th:text="${authUser.getEmail}">Email</p>
+
+
+<br>
+<br>
+
+<form th:action="@{/twit/new}" th:object="${twit}"  th:method="post">
+    <input id="newTwit"
+           name="newTwit"
+           type="text"
+           required
+           minlength="1"
+           maxlength="200"
+           th:field="*{context}"
+           placeholder="Новый твит"/>
+    <span class="error"></span>
+    <button id="button" type="submit" value="Post">Post</button>
+</form>
+
+<br>
+
+<h3>Ваши твиты</h3>
+
+
+<tr th:each="twit : ${userTwits}">
+    <td><span th:text="${twit.getId}"> Title </span></td>
+    <td><span th:text="${twit.getContext}"> Author </span></td>
+    <br>
+    <br>
+</tr>
+
+
+
+
+</body>
+</html>
