@@ -37,6 +37,15 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    public User(int id, String name, String lastName, String accountName, String email, String phone) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.accountName = accountName;
+        this.email = email;
+        this.phone = phone;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

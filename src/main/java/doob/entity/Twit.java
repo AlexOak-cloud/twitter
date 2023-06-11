@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Twit {
+public class Twit implements Comparable<Twit> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,4 +23,9 @@ public class Twit {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Override
+    public int compareTo(Twit twit) {
+        return getDataTime().compareTo(twit.getDataTime());
+    }
 }

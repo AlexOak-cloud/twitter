@@ -7,10 +7,14 @@
 <body>
 
 <h2 th:text="${authUser.getAccountName}">Account name</h2>
-<p th:text="${authUser.getPhone}">Phone</p>
-<p th:text="${authUser.getEmail}">Email</p>
+<p th:text="${authUser.getName + ' ' + authUser.getLastName}">Email</p>
+<p th:text="'Телефон:' + ${authUser.getPhone()}">Phone</p>
+<p th:text="'Почта: ' + ${authUser.getEmail}">Email</p>
 
 
+
+<br>
+<a th:href="@{/user/friends}">Подписчики</a>
 <br>
 <br>
 
@@ -24,7 +28,7 @@
            th:field="*{context}"
            placeholder="Новый твит"/>
     <span class="error"></span>
-    <button id="button" type="submit" value="Post">Post</button>
+    <button id="button" type="submit" value="Поделиться">Поделиться</button>
 </form>
 
 <br>
@@ -33,11 +37,22 @@
 
 
 <tr th:each="twit : ${userTwits}">
-    <td><span th:text="${twit.getId}"> Title </span></td>
     <td><span th:text="${twit.getContext}"> Author </span></td>
     <br>
     <br>
 </tr>
+
+<br>
+<br>
+<br>
+<br>
+
+<tr th:each="user : ${allUsers}">
+    <a th:text="${user.getName + ' ' + user.getId}"  th:href="@{/user/getById/{id}(id = ${user.getId})}">empty link</a>
+
+</tr>
+
+
 
 
 

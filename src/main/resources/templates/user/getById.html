@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2 th:text="${userById.getAccountName}">Account name</h2>
+<p th:text="${userById.getPhone}">Phone</p>
+<p th:text="${userById.getEmail}">Email</p>
+
+
+<br>
+<br>
+
+<a th:href="@{/user/friends/{id}(id=${userById.getId})}">Подписчики</a>
+<br>
+<br>
+
+<h3 th:text="${userById.getAccountName + ' ' +  asd}"> твиты</h3>
+
+
+<tr th:each="twit : ${allTwitsByUser}">
+    <td><span th:text="${twit.getContext}"> Author </span></td>
+    <br>
+    <br>
+</tr>
+
+<form th:action="@{/friends/new/{id}(id=${userById.getId})}"  th:method="post">
+    <button id="button" type="submit" value="Добавить друга">Добавить друга</button>
+</form>
+
+</body>
+</html>

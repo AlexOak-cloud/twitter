@@ -1,6 +1,7 @@
 package doob.controllers;
 
 import doob.entity.User;
+import doob.services.FriendsService;
 import doob.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RegistrationController {
 
+
+    @Autowired
+    private FriendsService friendsService;
     @Autowired
     private UserService userService;
 
@@ -26,7 +30,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public ModelAndView addUser(User user) {
         userService.save(user);
-        userService.createTableFriends(user);
-        return new ModelAndView("redirect:/registration");
+        friendsService.createTable(user);
+        return new ModelAndView("redirect:/login");
     }
 }

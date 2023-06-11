@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<h1 th:text="${authUser.getAccountName}">Account Name</h1>
+
+<br>
+<br>
+
+
+<tr th:each="friend : ${friends}">
+  <a th:href="@{/user/getById/{id}(id=${friend.getId})}"   th:text="${friend.getName + ' ' + friend.getLastName}"> Author </a>
+  <br>
+
+</tr>
+
+</body>
+</html>

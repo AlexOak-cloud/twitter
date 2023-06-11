@@ -12,8 +12,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +26,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    private Connector connector = new Connector();
+
 
 
     public void save(User user) {
@@ -36,25 +38,23 @@ public class UserService implements UserDetailsService {
     }
 
 
-    private List<User> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
-
     }
-
     public User findByName(String username) {
         return userRepository.findByName(username);
     }
 
-    private User findById(int id) {
+    public User findById(int id) {
         Optional<User> user = userRepository.findById(id);
         return user.get();
     }
 
-    private void delete(User user) {
+    public void delete(User user) {
         userRepository.delete(user);
     }
 
-    private void deleteById(int id) {
+    public void deleteById(int id) {
         userRepository.deleteById(id);
     }
 
@@ -63,18 +63,8 @@ public class UserService implements UserDetailsService {
         return userRepository.findByName(username);
     }
 
-    public boolean createTableFriends(User user){
-        try(Statement statement = connector.getStatement()){
-            statement.execute("use test");
-            statement.execute(
-                    "CREATE TABLE frinds_"+ user.getId() + " ( friend_id INT UNIQUE NOT NULL," +
-                            "FOREIGN KEY (friend_id) REFERENCES user(id)" +
-                            ")ENGINE=INNODB ");
-            return true;
-        } catch (SQLException ex){
-            ex.printStackTrace();
-            return false;
-        }
-    }
+
+
+
 
 }

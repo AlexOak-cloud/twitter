@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,31 +20,35 @@ public class TwitService {
     private TwitRepository twitRepository;
 
 
-
-    public void save(Twit twit){
+    public void save(Twit twit) {
         twitRepository.save(twit);
     }
 
-    public List<Twit> findAllByUser(User user){
+    public List<Twit> findAllByUser(User user) {
         return twitRepository.findAllByUser(user);
     }
 
-    private List<Twit> findAll(){
+    public List<Twit> findAll() {
         return twitRepository.findAll();
 
     }
 
-    private Twit findById(int id){
+    public Twit findById(int id) {
         Optional<Twit> user = twitRepository.findById(id);
         return user.get();
     }
 
-    private void delete(Twit twit){
+    public void delete(Twit twit) {
         twitRepository.delete(twit);
     }
 
-    private void deleteById(int id){
+    public void deleteById(int id) {
         twitRepository.deleteById(id);
+    }
+
+    public List<Twit> sortedListByDateTime(List<Twit> localList) {
+        Collections.sort(localList);
+        return localList;
     }
 
 

@@ -16,6 +16,9 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Override
     <S extends User> S save(S entity);
 
+    @Override
+    List<User> findAll();
+
     User findByName(String username);
 
     @Override
