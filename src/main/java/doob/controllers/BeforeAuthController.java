@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class BeforeStartController {
+public class BeforeAuthController {
 
     @Autowired
     private FriendsService friendsService;
 
 
-    @GetMapping("/beforeStart")
-    public ModelAndView beforeStart(@AuthenticationPrincipal User authUser) {
+    @GetMapping("/beforeAuth")
+    public ModelAndView beforeAuth(@AuthenticationPrincipal User authUser) {
         friendsService.createTable(authUser);
 
         return new ModelAndView("redirect:/main");

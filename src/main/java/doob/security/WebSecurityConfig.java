@@ -29,7 +29,7 @@ public class WebSecurityConfig {
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
-                        .permitAll().defaultSuccessUrl("/beforeStart")
+                        .permitAll().defaultSuccessUrl("/beforeAuth")
                 )
                 .logout(LogoutConfigurer::permitAll);
 
