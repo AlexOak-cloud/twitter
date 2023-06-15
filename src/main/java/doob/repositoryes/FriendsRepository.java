@@ -36,13 +36,12 @@ public class FriendsRepository {
     }
 
 
-
     public List<User> findAllByUser(User user) {
         List<User> rtnList = new ArrayList<>();
         try (Statement statement = connector.getStatement()) {
             statement.execute("use test");
             ResultSet resultSet = statement.executeQuery("SELECT * FROM user join " + generateTableName(user)
-                    + " WHERE user.id LIKE "+generateTableName(user)+".friend_id");
+                    + " WHERE user.id LIKE " + generateTableName(user) + ".friend_id");
             while (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 String accountName = resultSet.getString(2);
@@ -70,6 +69,21 @@ public class FriendsRepository {
         }
     }
 
+    public boolean isFriend(User user, User friend) {
+        boolean isFriend = false;
+        try (Statement statement = connector.getStatement()) {
+            statement.execute("use test");
+            ResultSet resultSet = statement.executeQuery("select * from " + generateTableName(user));
+            while (resultSet.next()) {
+                if(resultSet.getInt(1) == friend.getId() ){
+                    isFriend = true;
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return isFriend;
+    }
 
 
 }

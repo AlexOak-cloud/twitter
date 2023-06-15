@@ -6,17 +6,21 @@
 </head>
 <body>
 
-<h2 th:text="${authUser.getAccountName}">Account name</h2>
-<p th:text="${authUser.getName + ' ' + authUser.getLastName}">Email</p>
-<p th:text="'Телефон:' + ${authUser.getPhone()}">Phone</p>
+<a th:href="@{/main}">Новости | </a>
+<a th:href="@{/authUser/main}">Моя страница | </a>
+<a th:href="@{/authUser/friends}">Мои подписчики | </a>
+<a th:href="@{/user/main}">Мои сообщения | </a>
+<a th:href="@{/user/main}">Мои фото</a>
+
+<p>----------------------------------------------------------------</p>
+
+<h1 th:text="${authUser.getAccountName}">Account name</h1>
+<p th:text="${authUser.getName + ' ' + authUser.getLastName}">Name LastName</p>
+<p th:text="'Телефон: ' + ${authUser.getPhone()}">Phone</p>
 <p th:text="'Почта: ' + ${authUser.getEmail}">Email</p>
 
 
-
-<br>
-<a th:href="@{/user/friends}">Подписчики</a>
-<br>
-<br>
+<p>----------------------------------------------------------------</p>
 
 <form th:action="@{/twit/new}" th:object="${twit}"  th:method="post">
     <input id="newTwit"
@@ -34,27 +38,11 @@
 <br>
 
 <h3>Ваши твиты</h3>
-
-
 <tr th:each="twit : ${userTwits}">
     <td><span th:text="${twit.getContext}"> Author </span></td>
     <br>
     <br>
 </tr>
-
-<br>
-<br>
-<br>
-<br>
-
-<tr th:each="user : ${allUsers}">
-    <a th:text="${user.getName + ' ' + user.getId}"  th:href="@{/user/getById/{id}(id = ${user.getId})}">empty link</a>
-
-</tr>
-
-
-
-
 
 
 </body>

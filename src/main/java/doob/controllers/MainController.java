@@ -21,16 +21,13 @@ public class MainController {
     @GetMapping("main")
     public ModelAndView mainPage(@AuthenticationPrincipal User authUser){
         ModelAndView mav = new ModelAndView();
-        mav.addObject("authUser", authUser);
+
         List<Twit> allTwits = twitService.findAll();
         twitService.sortedListByDateTime(allTwits);
+        twitService.reverseList(allTwits);
+
         mav.addObject("allTwits", allTwits);
-
-
-
-
-
-
+        mav.setViewName("main.html");
         return mav;
     }
 

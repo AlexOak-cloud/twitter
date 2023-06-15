@@ -51,5 +51,10 @@ public class TwitService {
         return localList;
     }
 
+    public List<Twit> reverseList(List<Twit> list){
+        Collections.reverse(list);
+        return list;
+    }
+
 
 }

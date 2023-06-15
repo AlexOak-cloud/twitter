@@ -26,4 +26,9 @@ public class FriendsService {
         return friendsRepository.findAllByUser(user);
     }
 
+    public boolean isFriend(User authUser, User friend) {
+        return friendsRepository.isFriend(authUser, friend);
+    }
+
+
 }

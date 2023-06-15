@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @Controller
 public class UserController {
 
@@ -28,32 +26,33 @@ public class UserController {
     @Autowired
     private FriendsService friendsService;
 
-    @GetMapping("/user/main")
+    @GetMapping("/authUser/main")
     public ModelAndView main(@AuthenticationPrincipal User authUser, @ModelAttribute Twit twit) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("twit", new Twit());
-        mav.addObject("userTwits", twitService.findAllByUser(authUser));
+        mav.addObject("userTwits", twitService.reverseList(twitService.findAllByUser(authUser)));
         mav.addObject("authUser", authUser);
-        mav.addObject("allUsers", userService.findAll());
         mav.addObject("friends", friendsService.findAllByUser(authUser));
-        mav.setViewName("user/main.html");
+        mav.setViewName("authUser/main.html");
         return mav;
     }
 
 
-    @GetMapping("/user/getById/{id}")
+    @GetMapping("user/getById/{id}")
     public ModelAndView getById(@AuthenticationPrincipal User authUser, @PathVariable("id") int id) {
-        User userById = userService.findById(id);
         ModelAndView mav = new ModelAndView();
-        if(id == authUser.getId()){
-            mav.setViewName("redirect:/user/main");
+
+        User userById = userService.findById(id);
+
+        if (id == authUser.getId()) {
+            mav.setViewName("redirect:/authUser/main");
             return mav;
         }
-        List<Twit> allTwtitsByUser = twitService.findAllByUser(userById);
-        mav.addObject("allTwitsByUser", allTwtitsByUser);
+        mav.addObject("isFriend", friendsService.isFriend(authUser, userById));
+        mav.addObject("allTwitsByUser", twitService.findAllByUser(userById));
         mav.addObject("userById", userById);
         mav.addObject("friends", friendsService.findAllByUser(userById));
-        mav.setViewName("/user/getById.html");
+        mav.setViewName("users/getById.html");
         return mav;
     }
 

@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
+<a th:href="@{/main}">Новости | </a>
+<a th:href="@{/authUser/main}">Моя страница | </a>
+<a th:href="@{/authUser/friends}">Мои подписчики | </a>
+<a th:href="@{/user/main}">Мои сообщения | </a>
+<a th:href="@{/user/main}">Мои фото</a>
 
-<h2 th:text="${userById.getAccountName}">Account name</h2>
+
+<p>----------------------------------------------------------------</p>
 
 
+<h1 th:text="${authUser.getAccountName}">Account Name</h1>
+
+<h3>Подписчики: </h3>
 
 <tr th:each="friend : ${friends}">
-    <a th:href="@{/user/getById/{id}(id=${friend.getId})}"   th:text="${friend.getName + ' ' + friend.getLastName}"> Author </a>
-    <br>
-    <br>
+  <a th:href="@{/user/getById/{id}(id=${friend.getId})}"   th:text="${friend.getAccountName}"> Author </a>
+  <br>
 </tr>
-
 
 
 </body>

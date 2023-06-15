@@ -14,55 +14,44 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class FriendsController {
 
-     @Autowired
-     private FriendsService friendsService;
+    @Autowired
+    private FriendsService friendsService;
 
-     @Autowired
-     private UserService userService;
-
+    @Autowired
+    private UserService userService;
 
 
     @PostMapping("/friends/new/{id}")
-    public ModelAndView addFriend(@AuthenticationPrincipal User authUser, @PathVariable("id") int id){
-      ModelAndView mav = new ModelAndView();
+    public ModelAndView addFriend(@AuthenticationPrincipal User authUser, @PathVariable("id") int id) {
+        ModelAndView mav = new ModelAndView();
         User userById = userService.findById(id);
         friendsService.addFriend(authUser, userById);
 
 
-
-
-      mav.setViewName("redirect:/user/getById/" + userById.getId());
-      return mav;
+        mav.setViewName("redirect:/user/getById/" + userById.getId());
+        return mav;
     }
 
 
-    @GetMapping("/user/friends/{id}")
-    public ModelAndView findAllById(@PathVariable("id") int id){
+    @GetMapping("userById/{id}/friends")
+    public ModelAndView findAllById(@PathVariable("id") int id) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("friends.html");
         User userById = userService.findById(id);
         mav.addObject("friends", friendsService.findAllByUser(userById));
-        mav.addObject("userById",userService.findById(id));
-
-
-
-
-
+        mav.addObject("userById", userById);
         return mav;
     }
 
-    @GetMapping("/user/friends")
-    public ModelAndView allFriendsByAuthUser(@AuthenticationPrincipal User authUser){
+    @GetMapping("/authUser/friends")
+    public ModelAndView authUserFriends(@AuthenticationPrincipal User authUser){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/user/friends.html");
         mav.addObject("friends",friendsService.findAllByUser(authUser));
-        mav.addObject("authUser",authUser);
-
+        mav.addObject("authUser", authUser);
+        mav.setViewName("friends.html");
 
         return mav;
     }
-
-
 
 
 
