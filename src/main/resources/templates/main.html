@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
-<h1 th:text="${authUser.getAccountName}">Account name</h1>
-<a th:href="@{/user/main}">Мой аккаунт</a>
+<a th:href="@{/main}">Новости | </a>
+<a th:href="@{/authUser/main}">Моя страница | </a>
+<a th:href="@{/authUser/friends}">Мои подписчики | </a>
+<a th:href="@{/user/main}">Мои сообщения | </a>
+<a th:href="@{/user/main}">Мои фото</a>
 
-<br>
-<br>
-<br>
-<h3>Новости</h3>
+<p>----------------------------------------------------------------</p>
 
-<br>
+<h1>Новости: </h1>
+
+<p>__  __  __</p>
 
 <tr th:each="twit : ${allTwits}">
-    <a th:text="${twit.getUser.getAccountName}"  th:href="@{/user/getById/{id}(id=${twit.getUser.getId})}">User</a>
-    <p th:text="${twit.context}">Twit context</p>
-    <p th:text="${twit.getDataTime}">Date time</p>
-    <br>
-    <br>
+    <td><span th:text="${twit.getContext}"> </span></td>
+
+
+    <p>__  __  __</p>
 </tr>
 
 
