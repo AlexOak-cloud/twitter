@@ -2,12 +2,16 @@ package doob.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+
 import java.util.Set;
 
 @Entity
@@ -22,14 +26,20 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    @Size(min = 3, max = 20, message = "Длинна от 3 дщ 20 символов")
     @Column(name = "name")
     private String name;
+    @Size(min = 3, max = 20, message = "Длинна от 3 дщ 20 символов")
     @Column(name = "lastName")
     private String lastName;
+    @Size(min = 3, max = 20, message = "Длинна от 3 дщ 20 символов")
     @Column(name = "accountName")
     private String accountName;
+    @Size(min = 3, max = 20, message = "Длинна от 3 дщ 20 символов")
+    @Email
     @Column(name = "email")
     private String email;
+    @Size(min = 3, max = 20, message = "Длинна от 3 дщ 20 символов")
     @Column(name = "phone")
     private String phone;
     @Column(name = "password")

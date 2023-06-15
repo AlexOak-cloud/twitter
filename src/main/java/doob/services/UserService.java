@@ -1,7 +1,6 @@
 package doob.services;
 
 
-import doob.Mysql.Connector;
 import doob.entity.Role;
 import doob.entity.User;
 import doob.repositoryes.UserRepository;
@@ -12,12 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -61,6 +57,18 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByName(username);
+    }
+
+
+    public boolean isUsernameUnique(User user){
+        boolean isUnique = true;
+        List<User> userList = findAll();
+        for(User tmp : userList){
+            if(Objects.equals(tmp.getUsername(), user.getUsername())){
+                isUnique = false;
+            }
+        }
+        return isUnique;
     }
 
 

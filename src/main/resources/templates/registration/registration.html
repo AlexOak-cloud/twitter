@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/registration}" th:object="${user}" class="avt" th:method="post">
+    <h1 class="logInText">Регистрация</h1>
+
+    <tr>
+        <td>Имя:</td>
+        <td><input id="name" type="text" th:field="*{name}" placeholder="Имя" /></td>
+        <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+    </tr>
+    <br>
+
+    <tr>
+        <td>Пароль:</td>
+        <td><input id="password" type="text" th:field="*{password}" placeholder="Пароль" /></td>
+        <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</td>
+    </tr>
+    <br>
+    <tr>
+        <td>Фамилия:</td>
+        <td><input id="lastName" type="text" th:field="*{lastName}" placeholder="Фамилия" /></td>
+        <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</td>
+    </tr>
+    <br>
+    <tr>
+        <td>Номер телефона:</td>
+        <td><input id="phone" type="text" th:field="*{phone}" placeholder="Номер телефона" /></td>
+        <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Name Error</td>
+    </tr>
+    <br>
+    <tr>
+        <td>Псевдоним:</td>
+        <td><input id="accountName" type="text" th:field="*{accountName}" placeholder="Псевдоним" /></td>
+        <td th:if="${#fields.hasErrors('accountName')}" th:errors="*{accountName}">Name Error</td>
+    </tr>
+    <br>
+    <tr>
+        <td>Почта:</td>
+        <td><input id="email" type="text" th:field="*{email}" placeholder="Почта" /></td>
+        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</td>
+    </tr>
+    <br>
+    <button id="button" type="submit" value="Вход">Регистрация</button>
+</form>
+<br>
+
+<a th:href="@{/login}">Войти</a>
+
+</body>
+</html>
