@@ -1,7 +1,7 @@
 package doob.repositoryes;
 
 
-import doob.Mysql.Connector;
+import doob.mysql.Connector;
 import doob.entity.User;
 import org.springframework.stereotype.Repository;
 

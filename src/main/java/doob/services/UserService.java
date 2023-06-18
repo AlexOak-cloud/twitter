@@ -64,7 +64,8 @@ public class UserService implements UserDetailsService {
         boolean isUnique = true;
         List<User> userList = findAll();
         for(User tmp : userList){
-            if(Objects.equals(tmp.getUsername(), user.getUsername())){
+            if(tmp.getAccountName().equals(user.getAccountName())){
+                if(tmp.getId() == user.getId()) continue;
                 isUnique = false;
             }
         }

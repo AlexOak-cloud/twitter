@@ -1,6 +1,4 @@
-package doob.Mysql;
-
-import doob.entity.User;
+package doob.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

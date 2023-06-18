@@ -21,7 +21,7 @@
 
 
 
-<form th:action="@{/friends/new/{id}(id=${userById.getId})}"  th:method="post">
+<form th:if="${isFriend == false}" th:action="@{/friends/new/{id}(id=${userById.getId})}"  th:method="post">
   <button id="button" type="submit" value="Добавить друга">Подписаться</button>
 </form>
 

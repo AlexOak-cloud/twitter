@@ -24,7 +24,7 @@ public class TwitController {
         twit.setDataTime(LocalDateTime.now());
         twit.setUser(user);
         twitService.save(twit);
-        return new ModelAndView("redirect:/user/main");
+        return new ModelAndView("redirect:/authUser/main");
     }
 
 

@@ -1,11 +1,13 @@
-package doob.security;
+package doob.services;
 
 
 import doob.entity.Message;
+import doob.entity.User;
 import doob.repositoryes.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -21,7 +23,10 @@ public class MessageService {
     }
 
 
-    public Message  save(Message message){
+    public Message  save(Message message, User sender, User recipient){
+        message.setSender(sender);
+        message.setRecipient(recipient);
+        message.setDateTime(LocalDateTime.now());
         return messageRepository.save(message);
     }
 

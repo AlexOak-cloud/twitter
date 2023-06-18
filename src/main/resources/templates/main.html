@@ -19,6 +19,8 @@
 <p>__  __  __</p>
 
 <tr th:each="twit : ${allTwits}">
+    <a th:href="@{/user/getById/{id}(id=${twit.getUser.getId})}" th:text="${twit.getUser.getAccountName} + ' :'">author</a>
+    <br>
     <td><span th:text="${twit.getContext}"> </span></td>
 
 

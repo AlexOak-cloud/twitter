@@ -11,6 +11,8 @@
 <a th:href="@{/authUser/friends}">Мои подписчики | </a>
 <a th:href="@{/user/main}">Мои сообщения | </a>
 <a th:href="@{/user/main}">Мои фото</a>
+<a th:href="@{/logout}" method="post"></a>
+
 
 <p>----------------------------------------------------------------</p>
 
@@ -18,7 +20,9 @@
 <p th:text="${authUser.getName + ' ' + authUser.getLastName}">Name LastName</p>
 <p th:text="'Телефон: ' + ${authUser.getPhone()}">Phone</p>
 <p th:text="'Почта: ' + ${authUser.getEmail}">Email</p>
-
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 
 <p>----------------------------------------------------------------</p>
 
@@ -43,6 +47,7 @@
     <br>
     <br>
 </tr>
+
 
 
 </body>

@@ -33,6 +33,7 @@ public class UserController {
         mav.addObject("userTwits", twitService.reverseList(twitService.findAllByUser(authUser)));
         mav.addObject("authUser", authUser);
         mav.addObject("friends", friendsService.findAllByUser(authUser));
+        mav.addObject("isUnique", userService.isUsernameUnique(authUser));
         mav.setViewName("authUser/main.html");
         return mav;
     }
@@ -55,6 +56,8 @@ public class UserController {
         mav.setViewName("users/getById.html");
         return mav;
     }
+
+
 
 
 }
