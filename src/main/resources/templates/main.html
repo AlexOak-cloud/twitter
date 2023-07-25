@@ -16,15 +16,16 @@
 
 <h1>Новости: </h1>
 
-<p>__  __  __</p>
+<p>____________________</p>
 
 <tr th:each="twit : ${allTwits}">
     <a th:href="@{/user/getById/{id}(id=${twit.getUser.getId})}" th:text="${twit.getUser.getAccountName} + ' :'">author</a>
     <br>
+    <br>
     <td><span th:text="${twit.getContext}"> </span></td>
 
 
-    <p>__  __  __</p>
+    <p>____________________</p>
 </tr>
 
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -21,13 +22,17 @@ public class MessageRepository {
     public static final String path = "E:/Code/messages/";
 
 
-    public String getPath(User sender, User recipient) {
+    public String getDialogPath(User sender, User recipient) {
         String pathForCreate = path + sender.getId() + "_" + recipient.getId();
         File folder = new File(pathForCreate);
         if (!folder.exists()) {
             folder.mkdir();
         }
         return pathForCreate;
+    }
+
+    public String getPath(User authUser){
+        return path + authUser.getId();
     }
 
     public boolean save(String context, User sender, User recipient) {
@@ -61,6 +66,13 @@ public class MessageRepository {
             e.printStackTrace();
             return new Dialog();
         }
+    }
+
+    public List<User> getDialogsByUser(User authUser){
+        String path = getPath(authUser);
+        !!!!
+
+
 
     }
 }
