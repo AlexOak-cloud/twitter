@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,28 +20,13 @@ public class MessageRepository {
 
     @Autowired
     private Connector connector;
-    public static final String path = "E:/Code/messages/";
 
 
-    public String getDialogPath(User sender, User recipient) {
-        String pathForCreate = path + sender.getId() + "_" + recipient.getId();
-        File folder = new File(pathForCreate);
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-        return pathForCreate;
-    }
-
-    public String getPath(User authUser){
-        return path + authUser.getId();
-    }
-
-    public boolean save(String context, User sender, User recipient) {
-        File file = new File(getPath(sender, recipient));
-        try (FileWriter writer = new FileWriter(file, true)) {
-            writer.write(LocalDateTime.now().toString() + ": ");
-            writer.write(context);
-            writer.write("\n");
+    public boolean save(String context, File file) {
+        try (FileWriter fw = new FileWriter(file, true)) {
+            fw.write(LocalDateTime.now() + ": ");
+            fw.write(context);
+            fw.write("\n");
             return true;
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -48,31 +34,21 @@ public class MessageRepository {
         }
     }
 
-    public Dialog buildDialog(User sender, User recipient) {
+    public Set<Message> getMessagesByUsers(User sender, User recipient, File file) {
         Set<Message> messages = new HashSet<>();
-        try (FileReader fr = new FileReader(getPath(sender, recipient))) {
-            BufferedReader br = new BufferedReader(fr);
-            while (br.readLine() != null) {
+        try (FileReader fileReader = new FileReader(file)) {
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while (bufferedReader.readLine() != null) {
                 Message message = new Message();
-                message.setContext(br.readLine());
-                message.setSender(sender);
-                message.setRecipient(recipient);
+                message.setContext(bufferedReader.readLine());
                 messages.add(message);
             }
-            Dialog dialog = new Dialog();
-            dialog.setMessages(messages);
-            return dialog;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Dialog();
+            bufferedReader.close();
+            return messages;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return Collections.emptySet();
         }
     }
 
-    public List<User> getDialogsByUser(User authUser){
-        String path = getPath(authUser);
-        !!!!
-
-
-
-    }
 }
