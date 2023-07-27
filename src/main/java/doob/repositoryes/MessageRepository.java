@@ -1,6 +1,7 @@
 package doob.repositoryes;
 
 
+import doob.entity.Dialog;
 import doob.entity.Message;
 import doob.entity.User;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
@@ -30,15 +31,25 @@ public class MessageRepository {
     }
 
     public Set<Message> getMessages(File file){
-
+        Set<Message> rtnSet = new HashSet<>();
         try(FileReader fileReader = new FileReader(file)){
-
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while (bufferedReader.readLine() != null){
+                Message message = new Message();
+                message.setContext(bufferedReader.readLine());
+                rtnSet.add(message);
+            }
+            return rtnSet;
         }catch (IOException ex){
             ex.printStackTrace();
             return Collections.emptySet();
         }
-
-
     }
+
+
+
+
+
+
 
 }

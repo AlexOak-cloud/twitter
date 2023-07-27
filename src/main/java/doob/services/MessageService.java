@@ -2,6 +2,7 @@ package doob.services;
 
 
 import doob.entity.Dialog;
+import doob.entity.Message;
 import doob.entity.User;
 import doob.repositoryes.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 @Service
 public class MessageService {
@@ -34,6 +36,17 @@ public class MessageService {
             forSave = fileS;
         }
         return messageRepository.save(context,forSave);
+    }
+
+    public Set<Message> getMessagesByUsers(User sender, User recipient){
+        File file = new File(buildPath(sender,recipient));
+        return messageRepository.getMessages(file);
+    }
+
+    public Dialog buildDialog(Set<Message> set){
+        Dialog dialog = new Dialog();
+        dialog.setMessages(set);
+        return dialog;
     }
 
 

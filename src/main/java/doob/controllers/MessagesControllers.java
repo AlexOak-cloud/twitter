@@ -26,7 +26,13 @@ public class MessagesControllers {
 
     @GetMapping("/messages")
     public ModelAndView messages(@ModelAttribute("message")Message message) {
-        return new ModelAndView("messages.html");
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("messages.html");
+        messageService.getMessagesByUsers()
+
+
+
+        return mav;
     }
 
     @PostMapping("/messages")
