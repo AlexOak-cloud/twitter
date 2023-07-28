@@ -1,8 +1,10 @@
 package doob.controllers;
 
 
+import doob.entity.Dialog;
 import doob.entity.Message;
 import doob.entity.User;
+import doob.repositoryes.DialogRepository;
 import doob.repositoryes.MessageRepository;
 import doob.services.MessageService;
 import doob.services.UserService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.Set;
 
 @Controller
 public class MessagesControllers {
@@ -23,13 +26,15 @@ public class MessagesControllers {
     private MessageService messageService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private DialogRepository dialogRepository;
 
     @GetMapping("/messages")
-    public ModelAndView messages(@ModelAttribute("message")Message message) {
+    public ModelAndView messages(@AuthenticationPrincipal User authUser, @ModelAttribute("message")Message message) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("messages.html");
-        messageService.getMessagesByUsers()
-
+        Set<Dialog> dialogsByAuthUser = dialogRepository.findAllByUser(authUser);
+        mav.addObject("dialogsByAuthUser", dialogsByAuthUser);
 
 
         return mav;

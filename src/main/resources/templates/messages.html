@@ -11,13 +11,25 @@
     <input id="context"
            name="context"
            type="text"
-
-
            th:field="*{context}"
            placeholder="context"/>
-
     <button id="button" type="submit" value="send">Поделиться</button>
 </form>
+
+<br>
+<br>
+<br>
+
+<tr th:each="dialog : ${dialogsByAuthUser}">
+    <p  th:text="${dialog.getMessages} + ' :'">author</p>
+    <br>
+    <br>
+
+
+
+    <p>____________________</p>
+</tr>
+
 
 
 </body>

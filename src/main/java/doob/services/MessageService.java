@@ -21,7 +21,7 @@ public class MessageService {
     public static final String path = "E:/Code/messages/";
 
     public String buildPath(User sender, User recipient) {
-        return path + sender.getId() + "_" + recipient.getId();
+        return path + sender.getId() + "/" + sender.getId() + "_" + recipient.getId();
     }
 
     public boolean save(String context, User sender, User recipient) throws IOException {
