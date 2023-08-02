@@ -1,8 +1,6 @@
 package doob.services;
 
 
-import doob.entity.Dialog;
-import doob.entity.Message;
 import doob.entity.User;
 import doob.repositoryes.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Set;
 
 @Service
 public class MessageService {
@@ -18,35 +15,39 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public static final String path = "E:/Code/messages/";
 
-    public String buildPath(User sender, User recipient) {
-        return path + sender.getId() + "/" + sender.getId() + "_" + recipient.getId();
-    }
+    private static final String PATH = "E:/Code/messages/";
 
-    public boolean save(String context, User sender, User recipient) throws IOException {
-        if (context == null && sender == null && recipient == null) return false;
-        File forSave = null;
-        File fileS = new File(buildPath(sender, recipient));
-        File fileR = new File(buildPath(recipient, sender));
-        if (fileS.exists()) forSave = fileS;
-        if (fileR.exists()) forSave = fileR;
-        if(!fileS.exists() && !fileR.exists()){
-            fileS.createNewFile();
-            forSave = fileS;
+
+    public File createPathByUsers(User sender, User recipient) {
+        File folder = new File(PATH + sender.getId() + "/");
+        if (!folder.exists()) {
+            folder.mkdir();
         }
-        return messageRepository.save(context,forSave);
+        File file = new File(folder.getPath() + "/" + sender.getId() + "_" + recipient.getId());
+        return file;
     }
 
-    public Set<Message> getMessagesByUsers(User sender, User recipient){
-        File file = new File(buildPath(sender,recipient));
-        return messageRepository.getMessages(file);
-    }
 
-    public Dialog buildDialog(Set<Message> set){
-        Dialog dialog = new Dialog();
-        dialog.setMessages(set);
-        return dialog;
+    public boolean save(User sender, User recipient, String context) {
+        File rtnFile = null;
+        File file = createPathByUsers(sender, recipient);
+        File file1 = createPathByUsers(recipient, sender);
+        if (file.exists()) {
+            rtnFile = file;
+        }
+        if (rtnFile == null) {
+            rtnFile = file1;
+        }
+        try {
+            if (rtnFile == null) {
+                file.createNewFile();
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return messageRepository.save(file, context);
     }
 
 

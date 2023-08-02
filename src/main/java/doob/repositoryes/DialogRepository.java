@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.lang.annotation.Retention;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,58 +29,19 @@ public class DialogRepository {
     private MessageService messageService;
 
 
-    public List<Path> getAllPathsByUser(User user) {
-        Set<Dialog> dialogs = new HashSet<>();
-        try {
-            List<Path> allPaths = Files.walk(Paths.get(path + user.getId()))
-                    .filter(Files::isRegularFile)
-                    .collect(Collectors.toList());
-            return allPaths;
-
-        } catch (IOException ex) {
+    public List<String> getMessagesByUser(File file){
+        List<String> messages = new ArrayList<>();
+        try(FileReader fileReader = new FileReader(file)){
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while (bufferedReader.readLine() != null){
+                messages.add(bufferedReader.readLine());
+            }
+            return messages;
+        }catch (IOException ex){
             ex.printStackTrace();
             return Collections.emptyList();
         }
     }
-
-
-    public List<File> findFilesByPaths(List<Path> paths) {
-        List<File> rtnList = new ArrayList<>();
-        for (Path tmp : paths) {
-            File file = tmp.toFile();
-            rtnList.add(file);
-        }
-        return rtnList;
-    }
-
-
-    public Dialog buildDialog(File file) {
-        Dialog dialog = new Dialog();
-        try(FileReader fileReader = new FileReader(file)){
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            while (bufferedReader.readLine() != null){
-                Message message = new Message();
-                message.setContext(bufferedReader.readLine());
-                dialog.addMessage(message);
-            }
-            return dialog;
-        }catch (IOException exception){
-            exception.printStackTrace();
-            return new Dialog();
-        }
-    }
-
-
-    public Set<Dialog> findAllByUser(User user){
-        Set<Dialog> rtnSet = new HashSet<>();
-        List<Path> allPathsByUser = getAllPathsByUser(user);
-        List<File> filesByPaths = findFilesByPaths(allPathsByUser);
-        for(File tmp : filesByPaths){
-            rtnSet.add(buildDialog(tmp));
-        }
-        return rtnSet;
-    }
-
 
 }
 

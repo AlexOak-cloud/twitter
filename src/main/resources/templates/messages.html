@@ -20,8 +20,8 @@
 <br>
 <br>
 
-<tr th:each="dialog : ${dialogsByAuthUser}">
-    <p  th:text="${dialog.getMessages} + ' :'">author</p>
+<tr th:each="message : ${dialogsByAuthUser}">
+    <p  th:text="${message}">author</p>
     <br>
     <br>
 

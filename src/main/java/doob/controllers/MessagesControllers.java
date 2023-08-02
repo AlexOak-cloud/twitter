@@ -6,6 +6,7 @@ import doob.entity.Message;
 import doob.entity.User;
 import doob.repositoryes.DialogRepository;
 import doob.repositoryes.MessageRepository;
+import doob.services.DialogService;
 import doob.services.MessageService;
 import doob.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -27,13 +29,13 @@ public class MessagesControllers {
     @Autowired
     private UserService userService;
     @Autowired
-    private DialogRepository dialogRepository;
+    private DialogService dialogService;
 
     @GetMapping("/messages")
     public ModelAndView messages(@AuthenticationPrincipal User authUser, @ModelAttribute("message")Message message) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("messages.html");
-        Set<Dialog> dialogsByAuthUser = dialogRepository.findAllByUser(authUser);
+        List<String> dialogsByAuthUser = dialogService.getMessagesByUser();
         mav.addObject("dialogsByAuthUser", dialogsByAuthUser);
 
 
@@ -46,15 +48,9 @@ public class MessagesControllers {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("redirect:/messages");
         mav.addObject("message", new Message());
-        try {
 
-            messageService.save(message.getContext(), authUser, userById);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        messageService.save(authUser,userById,message.getContext());
         return mav;
-
-
     }
 
 
