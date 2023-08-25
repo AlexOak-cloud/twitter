@@ -1,28 +1,49 @@
 package doob.repositoryes;
 
 
+import doob.entity.Message;
 import doob.entity.User;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDateTime;
+import java.io.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Repository
 public class MessageRepository {
 
+    private boolean fileExist(File file){
+        return file.exists();
+    }
 
-    public boolean save(File file, String context){
-        try(FileWriter fileWriter = new FileWriter(file)){
-            fileWriter.write(LocalDateTime.now().toString());
-            fileWriter.write("\n");
-            fileWriter.write(context);
-            fileWriter.write("\n");
+    public boolean save(File file, String content){
+        try(FileWriter fileWriter = new FileWriter(file,true)){
+            fileWriter.write(content + "\n");
             return true;
         }catch (IOException ex){
             ex.printStackTrace();
             return false;
         }
     }
+
+    public Set<Message> getMessages(File file) {
+        Set<Message> messages = new HashSet<>();
+        Message message = new Message();
+        try (FileReader fileReader = new FileReader(file)) {
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while (bufferedReader.readLine() != null) {
+                message.setContext(bufferedReader.readLine());
+                messages.add(message);
+            }
+            bufferedReader.close();
+            return messages;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return messages;
+        }
+    }
+
+
+
 }

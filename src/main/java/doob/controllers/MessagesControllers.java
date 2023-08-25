@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -32,24 +34,27 @@ public class MessagesControllers {
     private DialogService dialogService;
 
     @GetMapping("/messages")
-    public ModelAndView messages(@AuthenticationPrincipal User authUser, @ModelAttribute("message")Message message) {
+    public ModelAndView messages(@AuthenticationPrincipal User authUser, @ModelAttribute("message") Message message) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("messages.html");
-        List<String> dialogsByAuthUser = dialogService.getMessagesByUser();
-        mav.addObject("dialogsByAuthUser", dialogsByAuthUser);
-
-
+        User userById = userService.findById(17);
+        Set<Message> messages = messageService.getMessages(authUser, userById);
+        List<String> forIteration = new ArrayList<>();
+        for (Message tmp : messages) {
+            forIteration.add(tmp.getContext());
+        }
+        mav.addObject("list", forIteration);
         return mav;
     }
 
     @PostMapping("/messages")
-    public ModelAndView messagePost(Message message,@AuthenticationPrincipal User authUser) {
-        User userById = userService.findById(11);
+    public ModelAndView messagePost(Message message, @AuthenticationPrincipal User authUser) {
+        User userById = userService.findById(17);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("redirect:/messages");
         mav.addObject("message", new Message());
-
-        messageService.save(authUser,userById,message.getContext());
+        String contentForSave = authUser.getId()+ " " + LocalDateTime.now() + " " + message.getContext();
+        messageService.save(authUser, userById, contentForSave);
         return mav;
     }
 
