@@ -20,8 +20,8 @@
 <br>
 <br>
 
-<tr th:each="message : ${list}">
-    <p  th:text="${message}">author</p>
+<tr th:each="message : ${messages}">
+    <td><p th:text="${message.getContext}"> </p></td>
 
 
     <p>____________________</p>
