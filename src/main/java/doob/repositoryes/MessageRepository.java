@@ -5,8 +5,7 @@ import doob.entity.Message;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class MessageRepository {
@@ -21,19 +20,21 @@ public class MessageRepository {
         }
     }
 
-    public Set<Message> getMessages(File file) {
+    public Set<Message> getMessages(File file){
         Set<Message> messages = new HashSet<>();
         Message message = new Message();
-        try (FileReader fileReader = new FileReader(file)) {
-           BufferedReader bufferedReader = new BufferedReader(fileReader);
-            while(bufferedReader.readLine() != null){
-                message.setContext(bufferedReader.readLine());
+        try(FileReader fileReader = new FileReader(file)){
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                message.setContext(line);
                 messages.add(message);
+                line = bufferedReader.readLine();
             }
             return messages;
-        } catch (IOException ex) {
+        }catch (IOException ex){
             ex.printStackTrace();
-            return messages;
+            return Collections.emptySet();
         }
     }
 

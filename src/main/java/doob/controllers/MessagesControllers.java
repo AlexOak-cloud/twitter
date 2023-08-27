@@ -36,13 +36,7 @@ public class MessagesControllers {
         mav.setViewName("messages.html");
         User userById = userService.findById(17);
         Set<Message> messages = messageService.getMessages(authUser, userById);
-        List<String> forIteration = new ArrayList<>();
-        for (Message tmp : messages) {
-            forIteration.add(tmp.getContext());
-        }
-
-
-        mav.addObject("list", forIteration);
+        mav.addObject("messages", messages);
         return mav;
     }
 

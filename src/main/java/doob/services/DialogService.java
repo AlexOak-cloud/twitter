@@ -13,13 +13,13 @@ import java.util.List;
 public class DialogService {
 
 
-    @Autowired
-    private DialogRepository dialogRepository;
-
-    public List<String> getMessagesByUser(){
-        File file = new File("E:/Code/messages/17/17_11");
-        return dialogRepository.getMessagesByUser(file);
-    }
+//    @Autowired
+//    private DialogRepository dialogRepository;
+//
+//    public List<String> getMessagesByUser(){
+//        File file = new File("E:/Code/messages/17/17_11");
+//        return dialogRepository.getMessagesByUser(file);
+//    }
 
 
 

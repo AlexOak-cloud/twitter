@@ -19,7 +19,7 @@
 
     <tr>
         <td>Пароль:</td>
-        <td><input id="password" type="text" th:field="*{password}" placeholder="Пароль" /></td>
+        <td><input id="password" type="password" th:field="*{password}" placeholder="Пароль" /></td>
         <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</td>
     </tr>
 
