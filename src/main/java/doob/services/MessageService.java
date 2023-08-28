@@ -5,16 +5,20 @@ import doob.entity.Dialog;
 import doob.entity.Message;
 import doob.entity.User;
 import doob.repositoryes.MessageRepository;
+import org.hibernate.validator.internal.util.logging.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Service
 public class MessageService {
+
+    private String path = "E:/Code/messages/";
 
     @Autowired
     private MessageRepository messageRepository;
@@ -42,15 +46,5 @@ public class MessageService {
         File file = getFileByUser(sender,recipient);
         return messageRepository.save(file,content);
     }
-
-    public Set<Message> getMessages(User sender, User recipient){
-        return messageRepository.getMessages(getFileByUser(sender,recipient));
-    }
-
-
-
-
-
-
 
 }

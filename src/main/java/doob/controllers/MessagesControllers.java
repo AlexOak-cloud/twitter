@@ -3,6 +3,7 @@ package doob.controllers;
 
 import doob.entity.Message;
 import doob.entity.User;
+import doob.repositoryes.MessageRepository;
 import doob.services.DialogService;
 import doob.services.MessageService;
 import doob.services.UserService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +36,8 @@ public class MessagesControllers {
     public ModelAndView messages(@AuthenticationPrincipal User authUser, @ModelAttribute("message") Message message) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("messages.html");
-        User userById = userService.findById(17);
-        Set<Message> messages = messageService.getMessages(authUser, userById);
+        File file = new File("E:/Code/messages/17/18.txt");
+        List<Message> messages = messageService.getMessages(file);
         mav.addObject("messages", messages);
         return mav;
     }

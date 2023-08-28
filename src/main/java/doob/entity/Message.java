@@ -20,8 +20,5 @@ public class Message {
     private String context;
     @Transient
     private User sender;
-    @Transient
-    private User recipient;
     private LocalDateTime dateTime;
-    private String path;
 }
