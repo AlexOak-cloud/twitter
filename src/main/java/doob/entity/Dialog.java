@@ -1,8 +1,8 @@
 package doob.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -15,7 +15,7 @@ import java.util.Set;
 public class Dialog {
     private User recipient;
     private User sender;
-    private Set<Message> messages;
+    private List<Message> messages;
 
     public void setRecipient(User recipient) {
         this.recipient = recipient;
@@ -25,7 +25,7 @@ public class Dialog {
         this.sender = sender;
     }
 
-    public void setMessages(Set<Message> messages) {
+    public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
 
