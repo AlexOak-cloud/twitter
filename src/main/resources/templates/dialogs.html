@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<a th:href="@{/main}">Новости | </a>
+<a th:href="@{/authUser/main}">Моя страница | </a>
+<a th:href="@{/authUser/friends}">Мои подписчики | </a>
+<a th:href="@{/dialogs}">Мои сообщения | </a>
+<a th:href="@{/user/main}">Мои фото</a>
+
+<p>----------------------------------------------------------------</p>
+<h2>Диалоги</h2>
+
+
+<br>
+<tr th:each="dialog : ${dialogs}">
+    <a th:href="@{/message/{id}(id=${dialog.getRecipient.getId})}" th:text="${dialog.getRecipient.getName} ">author</a>
+
+
+    <p>____________________</p>
+</tr>
+
+
+
+</body>
+</html>

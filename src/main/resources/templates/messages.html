@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+
+<a th:href="@{/main}">Новости | </a>
+<a th:href="@{/authUser/main}">Моя страница | </a>
+<a th:href="@{/authUser/friends}">Мои подписчики | </a>
+<a th:href="@{/dialogs}">Мои сообщения | </a>
+<a th:href="@{/user/main}">Мои фото</a>
+
+</br>
+</br>
+<h2>Сообщения</h2>
 
 
 <form th:action="@{/messages}" th:object="${message}"  th:method="post">
@@ -12,17 +22,17 @@
            name="context"
            type="text"
            th:field="*{context}"
-           placeholder="context"/>
-    <button id="button" type="submit" value="send">Поделиться</button>
+           placeholder="сообщение"/>
+    <button id="button" type="submit" value="send">Отправить</button>
 </form>
+</br>
+</br>
 
-<br>
-<br>
-<br>
 
 
 <tr th:each="message : ${messages}">
-    <td th:text="${message.getContext}" ></td>
+    <a th:href="@{/user/getById/{id}(id=${message.getSender.getId})}" th:text="${message.getSender.getAccountName} + ' : '  "></a>
+    <td th:text="${message.getContext}"></td>
 
 
     <p>____________________</p>
