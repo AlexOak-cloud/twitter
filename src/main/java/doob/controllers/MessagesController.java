@@ -35,23 +35,23 @@ public class MessagesController {
     @GetMapping("/message/{id}")
     public ModelAndView messages(@AuthenticationPrincipal User authUser, @ModelAttribute("message") Message message,@PathVariable("id") int id){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("messages.html");
+        mav.setViewName("/dialogs/messages.html");
         User userById = userService.findById(id);
+        mav.addObject("userById",userById);
         Dialog dialog = dialogRepository.getDialog(authUser, userById);
-
         mav.addObject("messages",dialog.getMessages());
         return mav;
     }
 
 
-    @PostMapping("/messages")
-    public ModelAndView messagePost(Message message, @AuthenticationPrincipal User authUser) {
-        User userById = userService.findById(18);
+    @PostMapping("/messages/new/{id}")
+    public ModelAndView messagePost(Message message, @AuthenticationPrincipal User authUser,@PathVariable("id") int id) {
+        User userById = userService.findById(id);
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("redirect:/messages");
+        mav.setViewName("redirect:/message/{id}");
         mav.addObject("message", new Message());
-        String contentForSave = authUser.getId() + " " + LocalDateTime.now() + " " + message.getContext();
-        messageService.save(authUser, userById, contentForSave);
+        String content = authUser.getId() + " " + LocalDateTime.now() + " " + message.getContext();
+        messageService.save(authUser, userById, content);
         return mav;
     }
 

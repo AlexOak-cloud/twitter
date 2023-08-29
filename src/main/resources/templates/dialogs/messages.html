@@ -17,7 +17,7 @@
 <h2>Сообщения</h2>
 
 
-<form th:action="@{/messages}" th:object="${message}"  th:method="post">
+<form th:action="@{/messages/new/{id}(id=${userById.getId})}" th:object="${message}"  th:method="post">
     <input id="context"
            name="context"
            type="text"

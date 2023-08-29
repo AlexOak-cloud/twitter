@@ -22,9 +22,10 @@ public class DialogsController {
     @GetMapping("/dialogs")
     public ModelAndView messages(@AuthenticationPrincipal User authUser) {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("dialogs.html");
+        mav.setViewName("/dialogs/dialogs.html");
         List<Dialog> dialogs = dialogRepository.getDialogs(authUser);
-        mav.addObject("dialogs", dialogs);
+
+            mav.addObject("dialogs", dialogs);
         return mav;
     }
 

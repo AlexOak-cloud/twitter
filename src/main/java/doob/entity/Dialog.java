@@ -3,11 +3,9 @@ package doob.entity;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 
 @Getter
-
 @ToString
 @EqualsAndHashCode
 @RequiredArgsConstructor

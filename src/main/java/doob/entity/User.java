@@ -24,20 +24,20 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Size(min = 3, max = 20, message = "Длинна от 3 дщ 20 символов")
+    @Size(min = 3, max = 20, message = "Длинна от 3 дo 20 символов")
     @Column(name = "name")
     private String name;
-    @Size(min = 3, max = 20, message = "Длинна от 3 дщ 20 символов")
+    @Size(min = 3, max = 20, message = "Длинна от 3 дo 20 символов")
     @Column(name = "lastName")
     private String lastName;
-    @Size(min = 3, max = 20, message = "Длинна от 3 дщ 20 символов")
+    @Size(min = 3, max = 20, message = "Длинна от 3 дo 20 символов")
     @Column(name = "accountName")
     private String accountName;
-    @Size(min = 3, max = 20, message = "Длинна от 3 дщ 20 символов")
+    @Size(min = 3, max = 20, message = "Длинна от 3 дo 20 символов")
     @Email
     @Column(name = "email")
     private String email;
-    @Size(min = 3, max = 20, message = "Длинна от 3 дщ 20 символов")
+    @Size(min = 3, max = 20, message = "Длинна от 3 дo 20 символов")
     @Column(name = "phone")
     private String phone;
     @Column(name = "password")

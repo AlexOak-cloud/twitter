@@ -13,39 +13,47 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 
 @Repository
 public class DialogRepository {
 
-    public static final String PATH = "E:/Code/messages/";
+
+    @Autowired
+    private Utils utils;
 
     @Autowired
     private UserService userService;
 
     public List<File> getAllFilesByUser(User user) {
-        File folder = new File(PATH + user.getId());
-        List<File> files = new ArrayList<>();
-        files.toArray(folder.listFiles());
-        return files;
+        List<File> rtnList = new ArrayList<>();
+        File folder = new File(utils.getFolder(user));
+        File[] files = folder.listFiles();
+        if(files == null) return rtnList;
+        for (File file : files) {
+            if (file.isFile()) {
+                rtnList.add(file);
+            }
+        }
+        return rtnList;
     }
 
+
+
     public File getFileByUsers(User sender, User recipient) {
-        return new File(PATH + sender.getId() + "/" + recipient.getId() + ".txt");
+        return new File(utils.getFile(sender,recipient));
     }
 
     public List<Dialog> getDialogs(User user) {
         List<Dialog> rtnList = new ArrayList<>();
         List<File> allFilesByUser = getAllFilesByUser(user);
-        if(allFilesByUser != null && allFilesByUser.isEmpty()) {
-            for (File file : allFilesByUser) {
-                User recipient = userService.findById(Integer.parseInt(file.getName().substring(0, file.getName().length() - 4)));
-                List<String> stringFromFile = getStringFromFile(file);
-                List<Message> messages = convertInMessage(stringFromFile);
-                rtnList.add(new Dialog(recipient, user, messages));
-            }
+        for (File file : allFilesByUser) {
+            User recipient = userService.findById(Integer.parseInt(file.getName().substring(0, file.getName().length() - 4)));
+            List<String> stringFromFile = getStringFromFile(file);
+            List<Message> messages = convertInMessage(stringFromFile);
+            rtnList.add(new Dialog(recipient, user, messages));
+
         }
         return rtnList;
     }
