@@ -27,7 +27,7 @@ public class MessagesController {
     @Autowired
     private UserService userService;
     @Autowired
-    private DialogRepository dialogRepository;
+    private DialogService dialogService;
 
 
 
@@ -38,7 +38,7 @@ public class MessagesController {
         mav.setViewName("/dialogs/messages.html");
         User userById = userService.findById(id);
         mav.addObject("userById",userById);
-        Dialog dialog = dialogRepository.getDialog(authUser, userById);
+        Dialog dialog = dialogService.getDialog(authUser, userById);
         mav.addObject("messages",dialog.getMessages());
         return mav;
     }

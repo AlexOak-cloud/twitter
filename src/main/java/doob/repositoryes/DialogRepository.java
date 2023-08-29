@@ -58,14 +58,23 @@ public class DialogRepository {
         return rtnList;
     }
 
-    public Dialog getDialog(User sender, User recipient) {
-        Dialog dialog = new Dialog();
-        dialog.setSender(sender);
-        dialog.setRecipient(recipient);
-        File file = getFileByUsers(sender, recipient);
-        List<Message> messages = convertInMessage(getStringFromFile(file));
-        dialog.setMessages(messages);
-        return dialog;
+    public File[] getFileByUser(User sender, User recipient) {
+        File folderSender = new File(utils.getFolder(sender));
+        File folderRecipient = new File(utils.getFolder(recipient));
+        File fileForSender = new File(utils.getFile(sender,recipient));
+        File fileForRecipient = new File(utils.getFile(recipient,sender));
+        if (!folderSender.exists()) folderSender.mkdir();
+        if (!folderRecipient.exists()) folderRecipient.mkdir();
+        try {
+            if (!fileForSender.exists()) fileForSender.createNewFile();
+            if (!fileForRecipient.exists()) fileForRecipient.createNewFile();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        File[] files = new File[2];
+        files[0] = fileForSender;
+        files[1] = fileForRecipient;
+        return files;
     }
 
     public boolean save(File forSender, File forRecipient, String content) {
